@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>www.com</title>
+</head>
+
+<body>
+  <H1>SHORT_URL</H1>
+  <div>
+    <% if (locals.id) { %>
+      <p>URL GEN :http://localhost:8001/url/<%= id %>
+      </p>
+      <% } %>
+        <form method="post" action="/url">
+          <label>Enter your URL</label>
+          <input type="text" name="url" placeholder="Enter">
+          <button type="submit">Genrate url</button>
+        </form>
+  </div>
+  <div>
+    <% if (locals.urls) { %>
+      <table>
+        <thead>
+          <th>S.NO</th>
+          <th>ShortID</th>
+          <th>Redirect</th>
+          <th>Clicks</th>
+        </thead>
+        <tbody>
+          <% urls.forEach((urls,index)=> { %>
+            <tr></tr>
+            <td>
+              <%= index +1%>
+            </td>
+            <td>
+              <%= urls.shortId %>
+            </td>
+            <td>
+              <%= urls.redirectURL %>
+            </td>
+            <td>
+              <%= urls.visitHistory.length %>
+            </td>
+            <% }) %>
+        </tbody>
+      </table>
+      <% } %>
+  </div>
+
+
+</body>
+
+</html>
