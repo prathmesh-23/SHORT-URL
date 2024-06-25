@@ -1,12 +1,12 @@
 import { getUser } from "../services/outh.js";
 
 async function LoogedInUser(req, res, next) {
-  const userUid = req.cookies?.uuid;
+  const userToken = req.cookies?.jwtoken;
 
-  if (!userUid) {
+  if (!userToken) {
     return res.redirect("/login");
   }
-  const user = getUser(userUid);
+  const user = getUser(userToken);
   if (!user) {
     return res.redirect("/login")
   }
@@ -14,8 +14,8 @@ async function LoogedInUser(req, res, next) {
   next()
 }
 async function checkAuth(req, res, next) {
-  const userUid = req.cookies?.uuid;
-  const user = getUser(userUid);
+  const userToken = req.cookies?.jwtoken;
+  const user = getUser(userToken);
   req.user = user;
   next()
 }

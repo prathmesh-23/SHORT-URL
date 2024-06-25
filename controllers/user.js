@@ -1,5 +1,4 @@
 import User from "../models/users.js";
-import { v4 as uuidv4 } from 'uuid';
 import { setUser } from "../services/outh.js";
 
 
@@ -18,9 +17,8 @@ async function handleUserlogin(req, res) {
     console.log("Null");
   }
 
-  const sessionID = uuidv4();
-  setUser(sessionID, user)
-  res.cookie("uuid", sessionID)
+  const JWTtoken = setUser(user)
+  res.cookie("jwtoken", JWTtoken)
 
 
   return res.render("index")
