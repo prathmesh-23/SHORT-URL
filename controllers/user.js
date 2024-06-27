@@ -17,9 +17,15 @@ async function handleUserlogin(req, res) {
     console.log("Null");
   }
 
-  const JWTtoken = setUser(user)
-  res.cookie("jwtoken", JWTtoken)
+  const JWTtoken = setUser(user);
+  return res.json({ JWTtoken });
+  /* res.cookie("jwtoken", JWTtoken, {
 
+    domain: '.prathmesh-indulkar.vercel.app' //Domain Specific
+    Real use like googale if you  have gmail you automatically login in googale other subdomains
+
+  }) */
+  //cookies in we just use in browser
 
   return res.render("index")
 
