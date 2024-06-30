@@ -14,11 +14,12 @@ async function handleUserlogin(req, res) {
 
   const user = await User.findOne({ email, password });
   if (!user) {
-    console.log("Null");
+    return res.render("login")
   }
 
   const JWTtoken = setUser(user);
-  return res.json({ JWTtoken });
+  res.cookie("jwtoken", JWTtoken)
+  // return res.redirect("/")
   /* res.cookie("jwtoken", JWTtoken, {
 
     domain: '.prathmesh-indulkar.vercel.app' //Domain Specific

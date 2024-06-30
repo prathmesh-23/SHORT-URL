@@ -3,7 +3,7 @@ import URL from "./models/url.js";
 import { connectMongo } from "./connection/connect.js";
 import cookieParser from "cookie-parser";
 import path from "path"
-import { LoogedInUser, checkAuth } from "./middlewares/auth.js"
+import { checkForOuthentication, restrictTo } from "./middlewares/auth.js"
 
 //routes import
 import router from "./routes/url.js";
@@ -25,6 +25,7 @@ connectMongo(DBurl).then(() => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(checkForOuthentication);
 
 
 //View Engine Set 
@@ -36,9 +37,9 @@ app.set("views", path.resolve("./view")) //Declare my ejs files folder
 
 //NOTE Static Routers mean Frontend Pages Routers
 
-app.use("/url", LoogedInUser, router);
+app.use("/url", restrictTo(["NORMAL"]), router);
 app.use("/user", Userrouter)
-app.use('/', checkAuth, statRouter)
+app.use('/', statRouter)
 
 
 app.get("/url/:shortID", async (req, res) => {
